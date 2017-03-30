@@ -29,11 +29,15 @@ CRON_SCHEDULE=${CRON_SCHEDULE:-0 1 * * *}
 echo "access_key=$ACCESS_KEY" >> /root/.s3cfg
 echo "secret_key=$SECRET_KEY" >> /root/.s3cfg
 
+echo "Command given: $1"
 if [[ "$1" == 'no-cron' ]]; then
+    echo "no-cron mode selected, running sync immediately."
     exec /sync.sh
 elif [[ "$1" == 'delete' ]]; then
+    echo "delete mode selected, deleting $S3_PATH"
     exec /usr/local/bin/s3cmd del -r "$S3_PATH"
 else
+    echo "cron mode selected"
     LOGFIFO='/var/log/cron.fifo'
     if [[ ! -e "$LOGFIFO" ]]; then
         mkfifo "$LOGFIFO"
