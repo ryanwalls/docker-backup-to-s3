@@ -29,7 +29,9 @@ CRON_SCHEDULE=${CRON_SCHEDULE:-0 1 * * *}
 echo "access_key=$ACCESS_KEY" >> /root/.s3cfg
 echo "secret_key=$SECRET_KEY" >> /root/.s3cfg
 
-echo "Command given: $1"
+echo "Config being used for s3cmd:"
+cat /root/.s3cfg
+
 if [[ "$1" == 'no-cron' ]]; then
     echo "no-cron mode selected, running sync immediately."
     exec /sync.sh
